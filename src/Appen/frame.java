@@ -2,28 +2,31 @@ package Appen;
 
 
 import Controller.Controller;
+import entity.Player;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import javax.swing.*;
-
-import java.awt.*;
 
 
 public class frame extends JPanel implements Runnable {
     //Detta är pixlar för saker så som gubben
     final int tile = 16;
     final int scale = 3;
-    final int tilesize = tile * scale;
+    public final int tilesize = tile * scale;
     final int maxscreencol = 10;
     final int maxscreenrow = 10;
     final int screenWidth = tilesize * maxscreencol;
     final int screenHeight = tilesize * maxscreenrow;
+    //vilken fps
     int FPS = 60;
+
     Controller controller = new Controller();
     Thread gameThread;
+    Player player = new Player(this,controller);
+
 
     //starter position
     int playerX = 100;
@@ -73,20 +76,7 @@ public class frame extends JPanel implements Runnable {
         }
     }
     public void update() {
-
-        if(controller.up == true) {
-            playerY -= playerSpeed;
-        }
-        else if(controller.down == true) {
-            playerY +=playerSpeed;
-        }
-        else if(controller.left == true) {
-            playerX -= playerSpeed;
-        }
-        else if(controller.right == true){
-            playerX +=playerSpeed;
-        }
-
+        player.update();
 
     }
     public void paintComponent(Graphics g){
@@ -94,8 +84,7 @@ public class frame extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 =(Graphics2D)g;
-        g2.setColor(Color.CYAN);
-        g2.fillRect(playerX,playerY,tilesize,tilesize);
+        player.draw(g2);
         g2.dispose();
 
 
