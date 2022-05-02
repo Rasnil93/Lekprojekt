@@ -2,6 +2,7 @@ package Appen;
 
 
 import Controller.Controller;
+import Map.TileManager;
 import entity.Player;
 
 import java.awt.Color;
@@ -16,13 +17,13 @@ public class frame extends JPanel implements Runnable {
     final int tile = 16;
     final int scale = 3;
     public final int tilesize = tile * scale;
-    final int maxscreencol = 10;
-    final int maxscreenrow = 10;
-    final int screenWidth = tilesize * maxscreencol;
-    final int screenHeight = tilesize * maxscreenrow;
+    public final int maxscreencol = 10;
+    public final int maxscreenrow = 10;
+    public final int screenWidth = tilesize * maxscreencol;
+    public final int screenHeight = tilesize * maxscreenrow;
     //vilken fps
     int FPS = 60;
-
+    TileManager tileMan = new TileManager(this);
     Controller controller = new Controller();
     Thread gameThread;
     Player player = new Player(this,controller);
@@ -84,6 +85,7 @@ public class frame extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 =(Graphics2D)g;
+        tileMan.draw(g2);
         player.draw(g2);
         g2.dispose();
 
